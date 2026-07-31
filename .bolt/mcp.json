@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "catalyst": {
+      "enabled": true
+    }
+  }
+}
