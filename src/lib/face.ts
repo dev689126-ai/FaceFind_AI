@@ -12,7 +12,7 @@ export async function loadFaceModels(): Promise<void> {
 
   loadingPromise = (async () => {
     await Promise.all([
-      faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
+      faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL),
       faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
       faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL),
     ]);
@@ -33,7 +33,7 @@ export type DetectedFace = {
 
 export async function detectFaces(input: HTMLImageElement): Promise<DetectedFace[]> {
   await loadFaceModels();
-  const options = new faceapi.TinyFaceDetectorOptions({ inputSize: 608, scoreThreshold: 0.5 });
+  const options = new faceapi.SsdMobilenetv1Options({ minConfidence: 0.4 });
   const results = await faceapi
     .detectAllFaces(input, options)
     .withFaceLandmarks()
@@ -52,7 +52,7 @@ export async function detectFaces(input: HTMLImageElement): Promise<DetectedFace
 
 export async function detectSingleFace(input: HTMLImageElement): Promise<DetectedFace | null> {
   await loadFaceModels();
-  const options = new faceapi.TinyFaceDetectorOptions({ inputSize: 608, scoreThreshold: 0.5 });
+  const options = new faceapi.SsdMobilenetv1Options({ minConfidence: 0.4 });
   const result = await faceapi
     .detectSingleFace(input, options)
     .withFaceLandmarks()
