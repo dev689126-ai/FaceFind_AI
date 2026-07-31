@@ -40,7 +40,7 @@ export async function detectFaces(input: HTMLImageElement): Promise<DetectedFace
     .withFaceDescriptors();
 
   return results.map((r) => ({
-    descriptor: r.descriptor as Float32Array,
+    descriptor: l2Normalize(r.descriptor as Float32Array),
     bbox: {
       x: r.detection.box.x,
       y: r.detection.box.y,
@@ -60,7 +60,7 @@ export async function detectSingleFace(input: HTMLImageElement): Promise<Detecte
 
   if (!result) return null;
   return {
-    descriptor: result.descriptor as Float32Array,
+    descriptor: l2Normalize(result.descriptor as Float32Array),
     bbox: {
       x: result.detection.box.x,
       y: result.detection.box.y,
