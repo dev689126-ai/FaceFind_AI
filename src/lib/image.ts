@@ -34,8 +34,8 @@ export function similarityPercent(sim: number): number {
 }
 
 export function similarityColor(sim: number): string {
-  if (sim >= 0.6) return 'text-emerald-500';
-  if (sim >= 0.45) return 'text-sky-500';
+  if (sim >= 0.62) return 'text-emerald-500';
+  if (sim >= 0.58) return 'text-sky-500';
   return 'text-amber-500';
 }
 

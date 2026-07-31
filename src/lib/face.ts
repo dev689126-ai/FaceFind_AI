@@ -33,14 +33,14 @@ export type DetectedFace = {
 
 export async function detectFaces(input: HTMLImageElement): Promise<DetectedFace[]> {
   await loadFaceModels();
-  const options = new faceapi.TinyFaceDetectorOptions({ inputSize: 416, scoreThreshold: 0.4 });
+  const options = new faceapi.TinyFaceDetectorOptions({ inputSize: 608, scoreThreshold: 0.5 });
   const results = await faceapi
     .detectAllFaces(input, options)
     .withFaceLandmarks()
     .withFaceDescriptors();
 
   return results.map((r) => ({
-    descriptor: l2Normalize(r.descriptor as Float32Array),
+    descriptor: r.descriptor as Float32Array,
     bbox: {
       x: r.detection.box.x,
       y: r.detection.box.y,
@@ -52,7 +52,7 @@ export async function detectFaces(input: HTMLImageElement): Promise<DetectedFace
 
 export async function detectSingleFace(input: HTMLImageElement): Promise<DetectedFace | null> {
   await loadFaceModels();
-  const options = new faceapi.TinyFaceDetectorOptions({ inputSize: 416, scoreThreshold: 0.4 });
+  const options = new faceapi.TinyFaceDetectorOptions({ inputSize: 608, scoreThreshold: 0.5 });
   const result = await faceapi
     .detectSingleFace(input, options)
     .withFaceLandmarks()
@@ -60,7 +60,7 @@ export async function detectSingleFace(input: HTMLImageElement): Promise<Detecte
 
   if (!result) return null;
   return {
-    descriptor: l2Normalize(result.descriptor as Float32Array),
+    descriptor: result.descriptor as Float32Array,
     bbox: {
       x: result.detection.box.x,
       y: result.detection.box.y,
